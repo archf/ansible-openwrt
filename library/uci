@@ -1,0 +1,55 @@
+#!/bin/sh
+# module for uci configuration.
+
+# OpenWrt-doc: http://wiki.openwrt.org/doc/techref/uci
+# ansible-doc: http://docs.ansible.com/developing_modules.html
+
+# Ansible transports arguments to modules in a file. The
+# path to the arguments file is in $1, and the file
+# contains the module's arguments like in this example:
+#
+#       name="name" value=15 dest=/tmp/destfile
+#
+# This is a little dangerous (!?!), but I'm going to ask
+# the current shell to parse that file; it will set
+# variables accordingly.
+
+# parameters are command, key, value
+source ${1}
+
+# validate arguments
+if [ -z "$command" ]; then
+        echo 'failed=True msg="Module needs command=argument"'
+        exit 0;
+fi
+
+if [ -z "$key" ]; then
+        echo 'failed=True msg="Module needs key=argument"'
+        exit 0;
+fi
+
+if [ -z "$value" ]; then
+        echo 'failed=True msg="Module needs value=argument"'
+        exit 0;
+fi
+
+case $command in
+    'set')
+        [ $(uci get "${key}") = "${value}" ]
+        changed=$?
+        ;;
+    'add_list')
+        uci get "$key" 2>/dev/null |grep -q "$value"
+        changed=$?
+        ;;
+esac
+
+if [ $changed != 0 ]
+then
+    uci "${command}" "${key}=${value}"
+    echo '{"changed": true, "msg": ok"}'
+    # echo "changed=True msg=executed uci ${command} ${key}=${value}"
+    exit 0
+fi
+    echo '{"changed": false, "msg": "ok"}'
+    exit 0

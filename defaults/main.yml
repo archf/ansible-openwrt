@@ -1,0 +1,141 @@
+---
+# defaults file for openwrt
+hostname: OpenWrt
+
+ntpconf:
+  enabled: 1
+  enable_server: 1
+
+# uci: command=set key="dropbear.@dropbear[0]
+dropbear:
+  port: 22222
+
+ntp_servers:
+  - 0.openwrt.pool.ntp.org
+  - 1.openwrt.pool.ntp.org
+  - 2.openwrt.pool.ntp.org
+  - 2.openwrt.pool.ntp.org
+
+# system.@system[0].zonename
+timezone: utc
+
+# network.lan
+lan:
+  ipaddr: 192.168.1.1
+  netmaks: 255.255.255.0
+
+# dhcp.lan
+dhcp:
+  start: 100
+  limit: 150
+  leasetime: 12h
+
+ddns: {}
+
+wireless:
+  - key: ssid
+    value: myssid
+    ifaces: [0]
+  - key: ssid
+    value: myssid-guest
+    ifaces: [1]
+  - key: ssid
+    value: myssid5
+    ifaces: [3]
+  - key: ssid
+    value: myssid-guest5
+    ifaces: [4]
+  - key: encryption
+    value: psk2
+    ifaces: [0,3,4]
+  - key: key
+    value: mysecret
+    ifaces: [0,3,4]
+
+    # defaults file for openwrt
+wireless:
+  - key: ssid
+    value: CEROwrt
+    ifaces: [0]
+  - key: ssid
+    value: CEROwrt5
+    ifaces: [3]
+  - key: encryption
+    value: psk2
+    ifaces: [0,3]
+  - key: key
+    value: Beatthebloat
+    ifaces: [0,3]
+  - key: ssid
+    value: CEROwrt-guest
+    ifaces: [1]
+  - key: ssid
+    value: CEROwrt-guest5
+    ifaces: [4]
+  - key: encryption
+    value: none
+    ifaces: [1,4]
+  - key: key
+    value: ""
+    ifaces: [1,4]
+
+# defaults file for openwrt
+ddns: {}
+
+dnsmasq:
+  server: []
+
+firewall:
+  redirect:
+    - index: 0
+      settings:
+        - key: target
+          value: DNAT
+        - key: src
+          value: wan
+        - key: dest
+          value: lan
+        - key: proto
+          value: tcp
+        - key: src_dport
+          value: 22
+        - key: dest_ip
+          value: 172.30.42.16
+        - key: dest_port
+          value: 22
+        - key: name
+          value: ssh_lanbox
+
+# defaults file for openwrt
+firewall:
+  # zone 0 is wan
+  # zone 1 is lan
+  # zone 2 is guest
+  policies:
+    - chain: output
+      policy: ACCEPT
+      zone: [0,1,2]
+
+    - chain: input
+      policy: ACCEPT
+      zone: [1]
+    - chain: input
+      policy: REJECT
+      zone: [0,2]
+
+    - chain: forward
+      policy: ACCEPT
+      zone: [1]
+    - chain: forward
+      policy: REJECT
+      zone: [0,2]
+
+  forwarding:
+    - index: 0
+      settings:
+      - key: src
+        value: guest
+      - key: dest
+        value: wan
+
+  redirect: []

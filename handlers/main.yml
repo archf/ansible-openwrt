@@ -1,0 +1,24 @@
+---
+
+# - name: restart snmpd
+#   raw: /etc/init.d/snmpd restart
+
+  # handlers file for ddns
+- name: restart ddns
+  raw: /etc/init.d/ddns restart
+
+  # handlers file for wireless
+- name: reload network
+  raw: /etc/init.d/network reload
+
+  # handlers file for firewall
+- name: reload firewall
+  raw: /etc/init.d/firewall reload
+
+  # handlers file for dnsmasq
+- name: reload dnsmasq
+  raw: /etc/init.d/dnsmasq reload
+
+  # handlers file for uci (to commit changes)
+- name: uci commit
+  raw: uci commit

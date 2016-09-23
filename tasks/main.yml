@@ -1,0 +1,75 @@
+---
+# file: roles/openwrt/tasks/main.yml
+# this is openwrt configuration role. All vars are defined in the host_vars
+# folder
+
+# system.@system[0]
+- name: configure gw hostname
+  uci: command="set" key="system.@system[0].hostname" value="{{ hostname }}"
+  notify: uci commit
+
+# - name: change dropbear listening port
+#   uci: command=set key="dropbear.@dropbear[0]
+#   notify: restart dropbear
+
+# system.ntp
+- name: enable busybox ntp client and server
+  uci: command=set key="system.ntp.{{ item.key }}" value="{{ item.value }}"
+  with_dict: ntpconf
+  notify: uci commit
+
+# system.ntp.server
+
+- name: configure ntp_servers references
+  uci: command=add_list key="system.ntp.server" value="{{ item }}"
+  with_items: ntp_servers
+  notify: uci commit
+
+- name: configure timezone
+  uci: command=set key="system.@system[0].zonename" value="{{ timezone }}"
+  notify: uci commit
+
+# # wireless
+# - name: configure wireless inferface
+#   uci: command=set key="wireless.@wifi-iface[{{ item.1 }}].{{ item.0.key }}" value="{{ item.0.value }}"
+#   with_subelements:
+#     - wireless
+#     - ifaces
+#   notify:
+#     - uci commit
+#     - reload network
+
+# dhcp.lan
+- name: configure dhcp
+  uci: command=set key="dhcp.lan.{{ item.key }}" value="{{ item.value }}"
+  with_dict: dhcp
+  notify:
+    - uci commit
+    - reload dnsmasq
+
+# dhcp.@dnsmasq[0]
+- name: configure dnsmasq
+  uci: command=add_list key="dhcp.@dnsmasq[0].{{ item.key }}" value="{{ item.value }}"
+  notify:
+    - uci commit
+    - reload dnsmasq
+  with_dict: dnsmasq
+
+# dhcp.@dnsmasq[0].server
+# - name: configure dns forwarders
+#   uci: command=add_list key="dhcp.@dnsmasq[0].server" value="{{ item }}"
+#   notify:
+#     - uci commit
+#     - reload dnsmasq
+#   with_items: forwarders
+
+# # # ddns
+# # - name: apply ddns uci settings
+# #   uci: command=set key="ddns.myddns.{{ item.key }}" value="{{ item.value }}"
+# #   with_dict:
+# #     ddns
+# #   notify:
+# #     - uci commit
+# #     - restart ddns
+
+# # - include: firewall.yml
