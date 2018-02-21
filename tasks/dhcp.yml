@@ -1,0 +1,36 @@
+---
+
+# dhcp.@dnsmasq[0]
+- name: dnsmasq service configuration
+  uci: command=batch value="{{openwrt_dhcp['dnsmasq']}}"
+  tags:
+    - dnsmasq
+  notify:
+    - reload dnsmasq
+
+# dhcp.<interface> e.g: dhcp.lan
+- name: dnsmasq interface configuration
+  uci: command=batch value="{{item}}"
+  with_items: "{{openwrt_dhcp['interfaces']}}"
+  tags:
+    - dnsmasq
+    - interface
+    - iface
+  notify:
+    - reload dnsmasq
+
+# dhcp.@hosts[i]
+- name: adding mac reservation entries in dnsmasq
+  uci: command=batch value="{{openwrt_dhcp['hosts']}}"
+  tags:
+    - dhcp
+  notify:
+    - reload dnsmasq
+
+# dhcp.@domain[i]
+- name: adding dns entries in dnsmasq
+  uci: command=batch value="{{openwrt_dhcp['domains']}}"
+  tags:
+    - dns
+  notify:
+    - reload dnsmasq

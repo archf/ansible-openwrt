@@ -1,0 +1,5 @@
+---
+
+# Task in standalone files to allow invocation through 'include_role' task.
+- name: install python3 and other ansible requirements
+  raw: opkg update && opkg install python3 python3-pip simplejson

@@ -1,5 +1,26 @@
 ---
-# tasks file for openwrt-system
-- name: set hostname
-  uci: command=set key="system.@system[0].hostname" value="{{ hostname }}"
-  notify: uci commit
+
+- name: hostname configuration
+  uci:
+    command: "set"
+    key: "system.@system[0].hostname"
+    value: "{{openwrt_system['hostname']}}"
+  notify:
+    - reload system
+
+# system.@system[0].zonename & system.@system[0].timezone
+- name: timezone configuration
+  uci:
+    command: "batch"
+    value: "{{openwrt_system['timezone']}}"
+  notify:
+    - reload system
+    - reload sysntpd
+
+# system.ntp
+- name: ntp service configuration
+  uci:
+    command: "batch"
+    value: "{{openwrt_system['ntp']}}"
+  notify:
+    - reload sysntpd

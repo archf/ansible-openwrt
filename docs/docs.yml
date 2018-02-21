@@ -1,20 +1,4 @@
 ---
+
 github_account: archf
-requirements: |
-  All you need is a ssh acces to your target openwrt system. Run your play by
-  with "remote_user: root".
-
-description: |
-  A role to configure openwrt. It works using a custom shell module to avoid requiring python on the target.
-  This is greatly inspired from the work of lefant. I gathered all his work on a single module
-  wich i slightly modified.
-
-  See [this role]("https://github.com/lefant/ansible-openwrt") or ansible-openwrt on ansible-galaxy
-
 todos: []
-
-role_stack: |
-  This role was carefully selected to be part an ultimate deck of roles to manage
-  your infrastructure.
-
-  All roles' documentation is wrapped in this [convenient guide](http://127.0.0.1:8000/).
