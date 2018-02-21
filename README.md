@@ -1,6 +1,6 @@
-# ansible-lede
+# ansible-openwrt
 
-A role to manage LEDE/Openwrt configuration.
+A role to manage OpenWRT configuration.
 
 ## Ansible requirements
 
@@ -17,7 +17,7 @@ None.
 ### Install with Ansible Galaxy
 
 ```shell
-ansible-galaxy install archf.lede
+ansible-galaxy install archf.openwrt
 ```
 
 Basic usage is:
@@ -25,7 +25,7 @@ Basic usage is:
 ```yaml
 - hosts: all
   roles:
-    - role: archf.lede
+    - role: archf.openwrt
 ```
 
 ### Install with git
@@ -33,13 +33,13 @@ Basic usage is:
 If you do not want a global installation, clone it into your `roles_path`.
 
 ```shell
-git clone git@github.com:archf/ansible-lede.git /path/to/roles_path
+git clone git@github.com:archf/ansible-openwrt.git /path/to/roles_path
 ```
 
 But I often add it as a submdule in a given `playbook_dir` repository.
 
 ```shell
-git submodule add git@github.com:archf/ansible-lede.git <playbook_dir>/roles/lede
+git submodule add git@github.com:archf/ansible-openwrt.git <playbook_dir>/roles/openwrt
 ```
 
 As the role is not managed by Ansible Galaxy, you do not have to specify the
@@ -50,7 +50,7 @@ Basic usage is:
 ```yaml
 - hosts: all
   roles:
-  - role: lede
+  - role: openwrt
 ```
 ## User guide
 
