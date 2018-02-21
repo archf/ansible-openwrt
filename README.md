@@ -361,7 +361,7 @@ None.
 
 ## License
 
-BSD.
+MIT.
 
 ## Author Information
 
