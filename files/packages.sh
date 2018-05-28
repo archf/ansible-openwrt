@@ -9,7 +9,6 @@
 #        extroot available"
 ##################################################
 opkg update && opkg install \
-  6rd \
   zsh \
   vim \
   tmux \
@@ -18,23 +17,50 @@ opkg update && opkg install \
   nmap \
   mtr \
   rsync \
-  shadow \
-  sudo \
   bind-dig \
-  python \
   block-mount \
   kmod-usb-storage \
   kmod-fs-ext4 \
   curl \
   wget \
-  wol \
-  etherwake \
   less \
-  zsh \
-  openssh-client \
-  openssh-server \
-  openssh-keygen \
-  openssh-sftp-server \
-  openssh-client-utils \
+  luci-ssl-openssl \
   ca-certificates \
-  python-openssl \
+  openssl-util \
+  sudo \
+  shadow-useradd
+  shadow \
+
+#   6rd \
+#   python \
+#   python-openssl \
+#   wol \
+#   etherwake \
+#   openssh-client \
+#   openssh-server \
+#   openssh-keygen \
+#   openssh-sftp-server \
+#   openssh-client-utils \
+
+opkg install  \
+  zsh \
+  vim \
+  tmux \
+  git \
+  tcpdump \
+  nmap \
+  mtr \
+  rsync \
+  bind-dig \
+  block-mount \
+  kmod-usb-storage \
+  kmod-fs-ext4 \
+  curl \
+  wget \
+  less \
+  luci-ssl-openssl \
+  ca-certificates \
+  openssl-util \
+  sudo \
+  shadow-useradd
+  shadow \

@@ -81,17 +81,11 @@ openwrt_dhcp:
 openwrt_dropbear: |
   # lan
   set dropbear.@dropbear[0].PasswordAuth='on'
-  set dropbear.@dropbear[0].Interface='lan'
   set dropbear.@dropbear[0].Port='22222'
   # Allow remote hosts to connect to local SSH forwarded ports
   set dropbear.@dropbear[0].GatewayPorts='on'
-  # wan
-  # set dropbear.@dropbear[1]=dropbear
-  set dropbear.@dropbear[1].PasswordAuth='on'
-  set dropbear.@dropbear[1].Interface='wwan'
-  set dropbear.@dropbear[1].Port='22222'
-  # Allow remote hosts to connect to local SSH forwarded ports
-  set dropbear.@dropbear[0].GatewayPorts='on'
+  # set this to prevent binding to wildcard adress
+  set dropbear.@dropbear[0].Interface='lan'
 
 # System
 openwrt_system:
@@ -99,7 +93,7 @@ openwrt_system:
   # see https://lede-project.org/docs/user-guide/system_configuration
   timezone: |
     set system.@system[0].zonename='utc'
-    set system.@system[0].timezone=''
+    set system.@system[0].timezone='GMT0'
   ntp: |
     set system.ntp.enabled='1'
     set system.ntp.enable_server='1'

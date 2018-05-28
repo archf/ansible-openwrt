@@ -3,3 +3,6 @@
 # Task in standalone files to allow invocation through 'include_role' task.
 - name: creating extroot
   script: extroot.sh
+
+- name: reboot
+  command: reboot

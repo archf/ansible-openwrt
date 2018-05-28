@@ -40,9 +40,7 @@ sed -i s#/mnt/sda2#/overlay# /etc/config/fstab
 # enable fstab (just to make sure)
 /etc/init.d/fstab enable
 
-# the reboot seems necessary to apply the previous packages,
-# maybe insmod would do it
-reboot
+# reboot
 
 # opkg update && opkg install openssh-sftp-server zsh
 
